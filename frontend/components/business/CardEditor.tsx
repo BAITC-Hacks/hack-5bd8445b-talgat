@@ -12,7 +12,7 @@ import type { CardField, CardFields, Evaluation, Meta, Task } from "@/lib/types"
 
 const rankFor = (score: number, others: number[]) => 1 + others.filter((s) => s >= score).length;
 
-export function CardEditor({ task: initial, meta, otherScores }: { task: Task; meta: Meta; otherScores: number[] }) {
+export function CardEditor({ task: initial, meta, otherScores, initialPreview }: { task: Task; meta: Meta; otherScores: number[]; initialPreview: Evaluation }) {
   const router = useRouter();
   const toast = useToast();
   const proposed = initial.clarification?.proposed ?? null;
@@ -21,7 +21,7 @@ export function CardEditor({ task: initial, meta, otherScores }: { task: Task; m
   const [title, setTitle] = useState(proposed?.title || initial.title);
   const [topic, setTopic] = useState(initial.topic);
   const [fields, setFields] = useState<CardFields>(proposed?.fields ?? initial.fields);
-  const [preview, setPreview] = useState<Evaluation>(initial.evaluation);
+  const [preview, setPreview] = useState<Evaluation>(initialPreview);
   const [busy, setBusy] = useState<"" | "confirm" | "publish">("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [aiNote, setAiNote] = useState(proposed);

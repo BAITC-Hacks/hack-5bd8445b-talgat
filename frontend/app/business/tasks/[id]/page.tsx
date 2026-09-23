@@ -17,5 +17,7 @@ export default async function TaskCardPage({ params }: { params: Promise<{ id: s
   }
   const [task, meta, catalog] = loaded.value;
   const otherScores = catalog.items.filter((i) => i.id !== task.id).map((i) => i.score);
-  return <CardEditor task={task} meta={meta} otherScores={otherScores} />;
+  const proposed = task.clarification?.proposed?.fields;
+  const initialPreview = proposed ? await api.scorePreview(proposed).catch(() => task.evaluation) : task.evaluation;
+  return <CardEditor task={task} meta={meta} otherScores={otherScores} initialPreview={initialPreview} />;
 }
