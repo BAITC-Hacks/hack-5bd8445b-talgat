@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "tsx watch src/index.ts",
     "build": "prisma generate && tsc -p tsconfig.json",
     "start": "node dist/src/index.js",
@@ -24,5 +25,14 @@
     "openai": "^7.21.0",
     "pg": "^8.23.0",
     "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.13.6",
+    "@types/pg": "^8.23.1",
+    "prisma": "7.10.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
   }
 }
