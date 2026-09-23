@@ -1,0 +1,137 @@
+// Схема данных MVP: бизнес → задача (карточка + рейтинг) → отклики команд → решение бизнеса.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Статус публикации задачи
+enum TaskStatus {
+  DRAFT // собирается, в каталоге не видна
+  PUBLISHED // опубликована в общем каталоге
+}
+
+/// Уровень готовности по баллам: 0–39 / 40–69 / 70–89 / 90–100
+enum ReadinessLevel {
+  DRAFT
+  WORKING
+  READY
+  PRIORITY
+}
+
+/// Решение бизнеса по команде; «на рассмотрении» = записи нет
+enum SelectionStatus {
+  SELECTED
+  REJECTED
+}
+
+model Business {
+  id        String   @id @default(cuid())
+  name      String
+  industry  String   @default("")
+  city      String   @default("")
+  /// Контактное лицо и должность
+  contact   String   @default("")
+  email     String   @default("")
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id              String         @id @default(cuid())
+  businessId      String
+  business        Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  status          TaskStatus     @default(DRAFT)
+  /// Тема (отрасль) — по ней фильтруется каталог
+  topic           String
+  title           String         @default("")
+  /// Черновик как его написал бизнес
+  rawDraft        String
+  // Поля карточки — только подтверждённые бизнесом значения
+  context         String         @default("")
+  need            String         @default("")
+  users           String         @default("")
+  data            String         @default("")
+  constraints     String         @default("")
+  expectedResult  String         @default("")
+  successCriteria String         @default("")
+  contact         String         @default("")
+  /// Формат консультаций и обратной связи
+  format          String         @default("")
+  /// Рейтинг готовности 0–100, пересчитывается при каждом подтверждении
+  score           Int            @default(0)
+  readinessLevel  ReadinessLevel @default(DRAFT)
+  /// Уточняющие вопросы ИИ и ответы бизнеса (JSON, см. src/ai/schemas.ts)
+  clarification   Json?
+  publishedAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  proposals       Proposal[]
+  selections      Selection[]
+  scoreEvents     ScoreEvent[]
+
+  @@index([status, score])
+  @@index([businessId])
+}
+
+/// История рейтинга: запись при каждом подтверждённом изменении карточки
+model ScoreEvent {
+  id        String         @id @default(cuid())
+  taskId    String
+  task      Task           @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  score     Int
+  level     ReadinessLevel
+  reason    String
+  createdAt DateTime       @default(now())
+
+  @@index([taskId, createdAt])
+}
+
+model TeamProfile {
+  id         String      @id @default(cuid())
+  name       String
+  members    Int         @default(3)
+  interests  String[]
+  skills     String[]
+  stack      String[]
+  createdAt  DateTime    @default(now())
+  proposals  Proposal[]
+  selections Selection[]
+}
+
+/// Отклик команды на задачу; число откликов не ограничено
+model Proposal {
+  id           String      @id @default(cuid())
+  taskId       String
+  task         Task        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  teamId       String
+  team         TeamProfile @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  idea         String
+  plan         String
+  deadline     String
+  prototypeUrl String      @default("")
+  createdAt    DateTime    @default(now())
+
+  @@index([taskId])
+  @@index([teamId])
+}
+
+/// Ручное решение бизнеса по команде в рамках задачи
+model Selection {
+  id        String          @id @default(cuid())
+  taskId    String
+  task      Task            @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  teamId    String
+  team      TeamProfile     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  status    SelectionStatus
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@unique([taskId, teamId])
+}
