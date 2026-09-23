@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "prisma generate && tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "test": "tsx --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "db:setup": "prisma migrate deploy && prisma db seed",
+    "db:reset": "prisma migrate reset --force"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "openai": "^7.21.0",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  }
+}

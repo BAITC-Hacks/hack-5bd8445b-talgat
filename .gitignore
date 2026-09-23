@@ -1,0 +1,26 @@
+# зависимости
+node_modules/
+
+# сборка
+frontend/.next/
+frontend/out/
+backend/dist/
+backend/src/generated/
+*.tsbuildinfo
+frontend/next-env.d.ts
+
+# переменные окружения (ключи не публикуем)
+.env
+.env.*
+!.env.example
+
+# логи
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# системные и редакторы
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
