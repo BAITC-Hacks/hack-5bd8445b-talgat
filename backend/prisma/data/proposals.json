@@ -1,0 +1,90 @@
+[
+  {
+    "id": "prop-tumar-clinic",
+    "taskId": "card-clinic-bot",
+    "teamId": "team-tumar-data",
+    "daysAgo": 1,
+    "decision": "SELECTED",
+    "idea": "Бот в Telegram на готовом расписании: запись в свободное окно, напоминание за сутки и перенос визита в два нажатия.",
+    "plan": "Неделя 1 — сценарии диалога и тестовое расписание.\nНеделя 2 — бот с записью и переносом.\nНеделя 3 — напоминания и тест с администраторами.",
+    "deadline": "3 недели",
+    "prototypeUrl": "https://github.com/tumar-data/clinic-bot"
+  },
+  {
+    "id": "prop-bytebatyrs-bakery",
+    "taskId": "card-bakery",
+    "teamId": "team-byte-batyrs",
+    "daysAgo": 3,
+    "decision": null,
+    "idea": "Модель прогноза продаж по точке и дню недели с учётом праздников; заказ на завтра выгружается в ту же Google-таблицу.",
+    "plan": "Неделя 1 — чистка чеков и анализ списаний.\nНеделя 2 — модель и проверка на истории.\nНеделя 3 — отчёт с заказом и пилот на трёх точках.",
+    "deadline": "3 недели",
+    "prototypeUrl": "https://github.com/byte-batyrs/bakery-forecast"
+  },
+  {
+    "id": "prop-qadam-bakery",
+    "taskId": "card-bakery",
+    "teamId": "team-qadam-lab",
+    "daysAgo": 2,
+    "decision": null,
+    "idea": "Мобильная форма заказа для управляющих с подсказкой по прошлым продажам и списаниям.",
+    "plan": "Интервью с управляющими → прототип в Figma → приложение на Flutter для трёх точек.",
+    "deadline": "5 недель",
+    "prototypeUrl": "https://www.figma.com/proto/qadam-bakery"
+  },
+  {
+    "id": "prop-altyn-reviews",
+    "taskId": "card-reviews",
+    "teamId": "team-altyn-pixel",
+    "daysAgo": 2,
+    "decision": "REJECTED",
+    "idea": "Дашборд с темами жалоб по неделям и выгрузкой самых частых проблем.",
+    "plan": "Разметка отзывов → группировка по темам → дашборд на Next.js.",
+    "deadline": "4 недели",
+    "prototypeUrl": ""
+  },
+  {
+    "id": "prop-nomad-fertilizer",
+    "taskId": "card-fertilizer",
+    "teamId": "team-nomad-stack",
+    "daysAgo": 4,
+    "decision": null,
+    "idea": "Веб-приложение, которое работает без интернета на складе и синхронизирует приход и расход при появлении связи.",
+    "plan": "Неделя 1 — перенос тетрадей в таблицы.\nНеделя 2 — офлайн-учёт на складе.\nНеделя 3 — отчёт для агронома.",
+    "deadline": "3 недели",
+    "prototypeUrl": "https://github.com/nomad-stack/bereke-stock"
+  },
+  {
+    "id": "prop-altyn-print",
+    "taskId": "card-print-dashboard",
+    "teamId": "team-altyn-pixel",
+    "daysAgo": 9,
+    "decision": null,
+    "idea": "Экран загрузки машин по сменам с цветовой разметкой простоев, данные — из журнала смен.",
+    "plan": "Разбор журнала смен → модель данных → дашборд для мастера смены.",
+    "deadline": "4 недели",
+    "prototypeUrl": ""
+  },
+  {
+    "id": "prop-bytebatyrs-warehouse",
+    "taskId": "card-warehouse",
+    "teamId": "team-byte-batyrs",
+    "daysAgo": 5,
+    "decision": "SELECTED",
+    "idea": "Прогноз числа заказов по дням на основе выгрузки из 1С и календаря праздников, из него — план сборщиков на смену.",
+    "plan": "Неделя 1 — анализ выгрузки за 3 года.\nНеделя 2 — модель прогноза.\nНеделя 3 — таблица с планом смен.",
+    "deadline": "3 недели",
+    "prototypeUrl": "https://github.com/byte-batyrs/warehouse-load"
+  },
+  {
+    "id": "prop-nomad-warehouse",
+    "taskId": "card-warehouse",
+    "teamId": "team-nomad-stack",
+    "daysAgo": 4,
+    "decision": null,
+    "idea": "Панель для начальника склада с прогнозом нагрузки и подсказкой, сколько сборщиков вызвать.",
+    "plan": "Интервью со складом → прогноз по дням → веб-панель.",
+    "deadline": "4 недели",
+    "prototypeUrl": ""
+  }
+]

@@ -1,0 +1,7 @@
+[
+  { "id": "team-byte-batyrs", "name": "Byte Batyrs", "members": 4, "interests": ["логистика", "аналитика"], "skills": ["анализ данных", "машинное обучение", "бэкенд"], "stack": ["Python", "pandas", "FastAPI", "PostgreSQL"] },
+  { "id": "team-nomad-stack", "name": "Nomad Stack", "members": 3, "interests": ["склад", "городская среда"], "skills": ["фронтенд", "картография", "бэкенд"], "stack": ["TypeScript", "React", "Leaflet", "Node.js"] },
+  { "id": "team-qadam-lab", "name": "Qadam Lab", "members": 5, "interests": ["образование", "HoReCa"], "skills": ["дизайн интерфейсов", "мобильная разработка", "прогноз"], "stack": ["Figma", "Flutter", "Firebase"] },
+  { "id": "team-tumar-data", "name": "Tumar Data", "members": 3, "interests": ["медицина", "сервис"], "skills": ["чат-боты", "обработка текста"], "stack": ["Python", "aiogram", "OpenAI API"] },
+  { "id": "team-altyn-pixel", "name": "Altyn Pixel", "members": 4, "interests": ["ритейл", "производство"], "skills": ["веб-разработка", "дашборды", "отчёты"], "stack": ["Next.js", "Tailwind", "Supabase"] }
+]

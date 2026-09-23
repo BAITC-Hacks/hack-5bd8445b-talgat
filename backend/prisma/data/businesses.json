@@ -1,0 +1,12 @@
+[
+  { "id": "biz-zhetisu", "name": "Жетісу Логистик", "industry": "Логистика", "city": "Алматы", "contact": "Айгерим Сейтказы, руководитель службы доставки", "email": "dostavka@zhetisu-log.kz" },
+  { "id": "biz-dam", "name": "Кофейни «Дәм»", "industry": "HoReCa", "city": "Алматы", "contact": "Ерлан Абенов, операционный директор", "email": "ops@dam-coffee.kz" },
+  { "id": "biz-saulyq", "name": "Клиника «Саулық»", "industry": "Медицина", "city": "Астана", "contact": "Динара Ахметова, администратор клиники", "email": "admin@saulyq-clinic.kz" },
+  { "id": "biz-bereke", "name": "Агрофирма «Береке»", "industry": "Агро", "city": "Кокшетау", "contact": "Серик Жумабаев, главный агроном", "email": "agro@bereke-agro.kz" },
+  { "id": "biz-kazan", "name": "Ресторан «Қазан»", "industry": "HoReCa", "city": "Шымкент", "contact": "Мадина Турсынова, управляющая", "email": "hello@kazan-rest.kz" },
+  { "id": "biz-zharyk", "name": "Типография «Жарық»", "industry": "Производство", "city": "Караганда", "contact": "Виктор Ким, начальник производства", "email": "print@zharyk.kz" },
+  { "id": "biz-zhol", "name": "Автосервис «Жол»", "industry": "Другое", "city": "Тараз", "contact": "Бауыржан Омаров, мастер-приёмщик", "email": "zhol.service@mail.kz" },
+  { "id": "biz-qadam", "name": "Школа робототехники Qadam", "industry": "Образование", "city": "Алматы", "contact": "Асель Нурланова, директор", "email": "hello@qadam-robotics.kz" },
+  { "id": "biz-zhusan", "name": "Аптеки «Жусан»", "industry": "Ритейл", "city": "Астана", "contact": "Ольга Петренко, главный бухгалтер", "email": "buh@zhusan-pharm.kz" },
+  { "id": "biz-sauda", "name": "Магазин «Сауда»", "industry": "Ритейл", "city": "Тараз", "contact": "Нуржан Беков, владелец", "email": "sauda.shop@mail.kz" }
+]
