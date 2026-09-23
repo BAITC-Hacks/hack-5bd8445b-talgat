@@ -1,69 +1,128 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ErrorState, Tier } from "@/components/ui";
+import { api, errorText } from "@/lib/api";
+import type { Catalog, LevelId, Meta } from "@/lib/types";
 
-export default function Home() {
+const ZONE: Record<LevelId, string> = { PRIORITY: "Приоритетные", READY: "Готовые", WORKING: "Рабочие", DRAFT: "Черновики" };
+
+const HOW: Record<string, string> = {
+  contextNeed: "Что происходит сейчас и что нужно изменить",
+  data: "Какие данные, примеры и источники есть",
+  result: "Что конкретно передаст команда",
+  success: "Измеримый признак, по которому примете работу",
+  constraints: "Сроки, технологии, доступы",
+  users: "Для кого решение",
+  link: "Контакт и формат консультаций",
+};
+
+export default async function EntryPage() {
+  let catalog: Catalog;
+  let meta: Meta;
+  try {
+    [catalog, meta] = await Promise.all([api.catalog(), api.meta()]);
+  } catch (err) {
+    return <ErrorState title="Не удалось загрузить данные" text={errorText(err)} />;
+  }
+
+  const rows: Array<{ zone?: LevelId; item?: Catalog["items"][number] }> = [];
+  let zone: LevelId | null = null;
+  for (const item of catalog.items.slice(0, 9)) {
+    if (item.level.id !== zone) {
+      zone = item.level.id;
+      rows.push({ zone });
+    }
+    rows.push({ item });
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <section className="entry" aria-labelledby="entry-title">
+      <div className="wrap entry-grid">
+        <div>
+          <h1 id="entry-title" className="display display--xl">
+            Чем понятнее задача — тем выше она в таблице
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="lead">
+            Бизнес описывает задачу и набирает очки за каждое внятное сведение. Студенческие команды выбирают задачи из общей таблицы. С кем работать, решает только бизнес.
           </p>
+
+          <div className="doors">
+            <Link className="door door--biz" href="/business/new">
+              <span className="door-who">Я из бизнеса</span>
+              <span className="door-act">
+                Выставить задачу <span aria-hidden="true">→</span>
+              </span>
+              <span className="door-note">Разберём черновик, зададим вопросы, посчитаем очки</span>
+            </Link>
+            <Link className="door door--team" href="/catalog">
+              <span className="door-who">Мы — студенческая команда</span>
+              <span className="door-act">
+                Смотреть таблицу <span aria-hidden="true">→</span>
+              </span>
+              <span className="door-note">Все задачи, фильтры, заявки без ограничений</span>
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <aside className="entry-board" aria-labelledby="board-title">
+          <div className="board-head">
+            <h2 id="board-title">Таблица сейчас</h2>
+            <Link href="/catalog">все задачи: {catalog.total}</Link>
+          </div>
+          {catalog.items.length === 0 ? (
+            <p className="muted">Опубликованных задач пока нет — выставьте первую.</p>
+          ) : (
+            <ol className="board">
+              {rows.map((r) =>
+                r.zone ? (
+                  <li key={`z-${r.zone}`} className="zone-row">
+                    {ZONE[r.zone]} <span>· {meta.levels.find((l) => l.id === r.zone)?.min}–{meta.levels.find((l) => l.id === r.zone)?.max}</span>
+                  </li>
+                ) : r.item ? (
+                  <li key={r.item.id} className={r.item.level.id === "PRIORITY" ? "is-lead" : undefined}>
+                    <span className="pos">{r.item.rank}</span>
+                    <span className="t">
+                      <Link href={`/catalog/${r.item.id}`}>{r.item.title}</Link>
+                    </span>
+                    <Tier level={r.item.level} />
+                    <span className="pts">{r.item.score}</span>
+                  </li>
+                ) : null,
+              )}
+            </ol>
+          )}
+        </aside>
+      </div>
+
+      <div className="wrap">
+        <section className="howto" aria-labelledby="howto-title">
+          <div className="section-head section-head--row">
+            <h2 id="howto-title" className="display display--md">
+              Как набрать 100 очков
+            </h2>
+            <p>Очки начисляет формула, а не ИИ, и только за заполненные и подтверждённые пункты. Низкие очки не прячут задачу: она остаётся в таблице и открыта для заявок.</p>
+          </div>
+          <ol className="howto-list">
+            {meta.criteria.map((c) => (
+              <li key={c.id}>
+                <b>{c.max}</b>
+                <span>
+                  <strong>{c.name}.</strong> {HOW[c.id] ?? c.hint}
+                </span>
+              </li>
+            ))}
+          </ol>
+          <ol className="levels-row">
+            {meta.levels.map((l) => (
+              <li key={l.id}>
+                <Tier level={l} />
+                <span>
+                  {l.min}–{l.max} · {l.note}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </div>
+    </section>
   );
 }
