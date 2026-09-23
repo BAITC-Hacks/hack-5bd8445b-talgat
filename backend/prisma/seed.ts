@@ -11,7 +11,10 @@ import { evaluate, levelOf, normalizeFields } from '../src/scoring/scoring.js';
 import { extractByRules, questionsByRules } from '../src/ai/fallback.js';
 import type { Clarification } from '../src/ai/schemas.js';
 
-const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: env.DATABASE_URL }) });
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: env.DATABASE_URL }),
+  transactionOptions: { maxWait: 15_000, timeout: 60_000 },
+});
 
 const load = <T>(name: string): T => JSON.parse(readFileSync(new URL(`./data/${name}.json`, import.meta.url), 'utf8')) as T;
 const daysAgo = (days: number, hour = 11) => {
